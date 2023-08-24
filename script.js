@@ -273,14 +273,22 @@ function displayLocation(smallest){
     for (let i = 0; i < 5; i++){
         let div = document.createElement("div");
         div.className = "item";
+        div.addEventListener('click',function(){
+            reportSighting(smallest[i].obj.name);
+         });
         div.innerHTML = `<div class="sighting-location">${smallest[i].obj.name}</div>`;
         document.getElementById("locations").appendChild(div);
     }
 }
 function error(errorObj){
     alert(errorObj.code + ": " + errorObj.message); 
+    let div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `<div class="sighting-location">Geolocation not supportet</div>`;
+    document.getElementById("locations").appendChild(div);
 }
 function currentLocation(){
+    document.getElementById("locations").innerHTML="";
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(findNearby,error,{enableHighAccuracy: true, maximumAge: 10000});
       } else {
